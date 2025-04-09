@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+
+  <Product Id="*" Name="NVM Wizard" Language="1033" Version="1.0.0.0" Manufacturer="Pham Tien" UpgradeCode="ab01558a-ecab-4081-a302-99ac256dc525">
+    <Package InstallerVersion="500" Compressed="yes" InstallScope="perMachine" />
+
+    <MajorUpgrade DowngradeErrorMessage="A newer version of NVM Wizard is already installed." />
+    <MediaTemplate />
+
+    <Feature Id="ProductFeature" Title="NVM Wizard" Level="1">
+      <ComponentRef Id="cmpWpfNVMWizardExe" />
+      <ComponentRef Id="cmpWpfNVMWizardDll" />
+      <ComponentRef Id="cmpNewtonsoftJsonDll" />
+      <ComponentRef Id="cmpRuntimeConfigJson" />
+      <ComponentRef Id="cmpDepsJson" />
+    </Feature>
+  </Product>
+
+  <!-- Khai báo đường dẫn cài -->
+  <Fragment>
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="ProgramFilesFolder">
+        <Directory Id="INSTALLFOLDER" Name="NVMWizard" />
+      </Directory>
+      <Directory Id="ProgramMenuFolder">
+        <Directory Id="ProgramMenuDir" Name="NVM Wizard" />
+      </Directory>
+      <Directory Id="DesktopFolder" />
+    </Directory>
+  </Fragment>
+
+  <!-- Danh sách các file cài đặt -->
+  <Fragment>
+    <ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
+      <Component Id="cmpWpfNVMWizardExe" Guid="7e1f8e76-5b20-4a43-8b2b-19e0c3f253e9">
+        <File Source="..\WpfNVMWizard\bin\Release\net8.0-windows\WpfNVMWizard.exe" KeyPath="yes">
+          <!-- Shortcut Start Menu -->
+          <Shortcut Id="StartMenuShortcut"
+                    Directory="ProgramMenuDir"
+                    Name="NVM Wizard"
+                    WorkingDirectory="INSTALLFOLDER"
+                    Icon="AppIcon"
+                    IconIndex="0"
+                    Advertise="no"
+                    Description="NVM Wizard Application" />
+
+          <!-- Shortcut Desktop -->
+          <Shortcut Id="DesktopShortcut"
+                    Directory="DesktopFolder"
+                    Name="NVM Wizard"
+                    WorkingDirectory="INSTALLFOLDER"
+                    Icon="AppIcon"
+                    IconIndex="0"
+                    Advertise="no"
+                    Description="NVM Wizard Application" />
+        </File>
+        <RemoveFolder Id="ProgramMenuDir" On="uninstall" />
+        <RegistryValue Root="HKCU" Key="Software\NVMWizard" Name="installed" Type="integer" Value="1"/>
+      </Component>
+
+      <Component Id="cmpWpfNVMWizardDll" Guid="a0f43dd0-5d2f-4ebc-9ce6-8597ec84f1c4">
+        <File Source="..\WpfNVMWizard\bin\Release\net8.0-windows\WpfNVMWizard.dll"/>
+      </Component>
+
+      <Component Id="cmpNewtonsoftJsonDll" Guid="d6cb2a2a-d5b9-4539-bfe0-92cb18b21e47">
+        <File Source="..\WpfNVMWizard\bin\Release\net8.0-windows\Newtonsoft.Json.dll"/>
+      </Component>
+
+      <Component Id="cmpRuntimeConfigJson" Guid="80f7772c-72d1-4fc5-9db8-6b86c09d2754">
+        <File Source="..\WpfNVMWizard\bin\Release\net8.0-windows\WpfNVMWizard.runtimeconfig.json"/>
+      </Component>
+
+      <Component Id="cmpDepsJson" Guid="2c4b12c5-6e9a-4a57-9962-1ad1a6463c92">
+        <File Source="..\WpfNVMWizard\bin\Release\net8.0-windows\WpfNVMWizard.deps.json"/>
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+
+  <!-- Icon shortcut -->
+  <Fragment>
+    <Icon Id="AppIcon" SourceFile="..\WpfNVMWizard\nvm.ico" />
+  </Fragment>
+
+</Wix>

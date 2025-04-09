@@ -1,0 +1,76 @@
+﻿<Window x:Class="WpfNVMWizard.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfNVMWizard"
+        mc:Ignorable="d"
+        Title="NVM - Node Version Manager | Phạm Tiến" Height="450" Width="800" Background="#FAFAFA">
+    <Grid Margin="20">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="250"/>
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <!-- Sidebar: NVM Status -->
+        <Border Grid.Column="0" Background="White" CornerRadius="12" Padding="16" 
+                BorderBrush="#DDD" BorderThickness="1" Margin="0,0,20,0">
+            <StackPanel>
+                <TextBlock Text="NVM Status" FontSize="18" FontWeight="Bold" Foreground="#2E7D32"/>
+                <TextBlock Text="Node Version Manager for Windows" Margin="0,4,0,12" FontSize="12" Foreground="#666"/>
+
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,0,12">
+                    <Ellipse Width="12" Height="12" Fill="Green"/>
+                    <TextBlock Text=" Installed" FontSize="14" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                </StackPanel>
+
+                <TextBlock Text="Version:" FontWeight="Bold" FontSize="12"/>
+                <TextBlock x:Name="txtNvmVersion" Margin="0,0,0,8"/>
+
+                <TextBlock Text="Path:" FontWeight="Bold" FontSize="12"/>
+                <TextBlock x:Name="txtNvmPath" TextWrapping="Wrap"/>
+            </StackPanel>
+        </Border>
+
+        <!-- Main content -->
+        <StackPanel Grid.Column="1" Orientation="Vertical">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button Content="Refresh" Click="Refresh_Click" Padding="10,5" Margin="0,0,0,10"/>
+            </StackPanel>
+
+            <Border Background="White" CornerRadius="12" Padding="16" BorderBrush="#DDD" BorderThickness="1">
+                <StackPanel>
+                    <TextBlock Text="Node.js Versions" FontSize="18" FontWeight="Bold"/>
+
+                    <TabControl Margin="0,10,0,0">
+                        <!-- Installed tab -->
+                        <TabItem Header="Installed">
+                            <StackPanel>
+                                <TextBox x:Name="txtSearchInstalled" Text="Search Installed..." Margin="0,0,0,10" 
+                                         GotFocus="SearchBox_GotFocus" LostFocus="SearchBox_LostFocus" TextChanged="SearchInstalled_TextChanged"/>
+                                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                                    <ListBox x:Name="lstInstalledVersions" MaxHeight="300">
+                                        <!-- Mỗi item sẽ là một Border được gán template -->
+                                    </ListBox>
+                                </ScrollViewer>
+                            </StackPanel>
+                        </TabItem>
+
+                        <!-- Available tab -->
+                        <TabItem Header="Available">
+                            <StackPanel>
+                                <TextBox x:Name="txtSearchAvailable" Text="Search Available..." Margin="0,0,0,10" 
+                                         GotFocus="SearchBox_GotFocus" LostFocus="SearchBox_LostFocus" TextChanged="SearchAvailable_TextChanged"/>
+                                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                                    <ListBox x:Name="lstAvailableVersions" MaxHeight="300">
+                                        <!-- Tương tự với bản chưa cài -->
+                                    </ListBox>
+                                </ScrollViewer>
+                            </StackPanel>
+                        </TabItem>
+                    </TabControl>
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </Grid>
+</Window>
